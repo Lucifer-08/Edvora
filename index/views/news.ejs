@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>College News Feed</title>
+  
+</head>
+<body>
+
+  <h1 class="text-3xl font-bold text-center text-pink-800 mb-6">Latest College News</h1>
+  <div id="news-container" class="space-y-4">Loading news...</div>
+
+  <script>
+    const apiKey = "pub_81559ded11d25191d0aa202882e07a95f57c8";
+    const endpoint = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=college&language=en`;
+
+    fetch(endpoint)
+      .then(response => response.json())
+      .then(data => {
+        const container = document.getElementById("news-container");
+        container.innerHTML = "";
+
+        if (data.results && data.results.length > 0) {
+          data.results.forEach(article => {
+            const newsCard = document.createElement("div");
+            newsCard.className = "news-card";
+
+            newsCard.innerHTML = `
+              <h2><a href="${article.link}" target="_blank">${article.title}</a></h2>
+              <p>${article.description || "No description available."}</p>
+              <small><strong>Source:</strong> ${article.source_id || "Unknown"}</small>
+            `;
+
+            container.appendChild(newsCard);
+          });
+        } else {
+          container.innerHTML = "No news found.";
+        }
+      })
+      .catch(error => {
+        document.getElementById("news-container").innerHTML = "Failed to load news.";
+        console.error("Error fetching news:", error);
+      });
+  </script>
+
+</body>
+</html>

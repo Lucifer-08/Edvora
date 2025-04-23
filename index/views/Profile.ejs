@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Profile</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-6">
+
+  <div class="bg-white shadow-lg rounded-2xl max-w-md w-full p-6">    
+    <div class="flex flex-col items-center">
+      <!-- Profile Picture -->
+      <img
+        id="photo"
+        class="w-32 h-32 rounded-full object-cover shadow mb-4"
+        src="../../index/public/assets/180273.jpg"
+        alt="User Profile Photo"
+      />
+      <!-- Name -->
+      <h2 id="name" class="text-2xl font-bold text-gray-800">John Doe</h2>
+
+      <!-- Info List -->
+      <div class="mt-6 space-y-4 w-full">
+        <!-- Mobile -->
+        <div class="flex items-center justify-between">
+          <span class="text-gray-600 font-medium">📞 Mobile:</span>
+          <span id="mobile" class="text-gray-800">+91 9876543210</span>
+        </div>
+        <!-- Email -->
+        <div class="flex items-center justify-between">
+          <span class="text-gray-600 font-medium">📧 Email:</span>
+          <span id="email" class="text-gray-800">johndoe@example.com</span>
+        </div>
+        <!-- College -->
+        <div class="flex items-center justify-between">
+          <span class="text-gray-600 font-medium">🎓 College:</span>
+          <span id="college"  class="text-gray-800">MNNIT Allahabad</span>
+        </div>
+        <!-- Address -->
+        <div class="flex items-center justify-between">
+          <span class="text-gray-600 font-medium">🏠 Address:</span>
+          <span id="address" class="text-gray-800 mt-1">123, Main Street,<br/>New Delhi, India</span>
+        </div>
+      </div>
+
+      <!-- Edit Button -->
+      <a href="/edit"><button class="mt-6 px-6 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition">
+        ✏️ Edit Profile
+      </button></a>
+    </div>
+  </div>
+  <script>
+    fetch("/api/profile")
+      .then((res) => res.json())
+      .then((data) => {
+        document.getElementById("name").textContent = data.name;
+        document.getElementById("mobile").textContent = data.mobile;
+        document.getElementById("email").textContent = data.email;
+        document.getElementById("college").textContent = data.college;
+        document.getElementById("address").textContent = data.address;
+  
+  if (data.photo && document.getElementById("photo")) {
+    document.getElementById("photo").src = data.photo;
+  }
+})
+.catch((err) => {
+  console.error("Failed to load profile", err);
+});
+  </script>
+  
+</body>
+</html>
+
+
