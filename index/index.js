@@ -369,9 +369,9 @@ app.post("/subRev", async (req, res) => {
 
 io.on("connection", (socket) => {
   console.log("⚡ User connected:", socket.id);
-  socket.on("set username", (username) => {
-    socket.username = username;
-  });
+  // socket.on("set username", (username) => {
+  //   socket.username = username;
+  // });
   socket.on("chat message", (msg) => {
     const messageWithUser = {
       username: socket.username || "Anonymous",
